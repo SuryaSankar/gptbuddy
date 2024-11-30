@@ -1,24 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import Sidebar from "./Sidebar";
 
 const sidebarId = "gptbuddy-sidebar";
 
-const toggleSidebar = () => {
-    const existingSidebar = document.getElementById(sidebarId);
-    if(existingSidebar){
-        existingSidebar.remove();
-    } else {
-        const mountNode = document.createElement("div");
-        mountNode.id = sidebarId;
-        document.body.appendChild(mountNode);
-        ReactDOM.render(<Sidebar />, mountNode);
-    }
-}
+// Main component to manage sidebar visibility
+const App = () => {
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
 
-chrome.runtime.onMessage.addListener(message=>{
-    if(message.type=='toggle_sidebar'){
+  // Toggle sidebar visibility
+  const toggleSidebar = () => {
+    setSidebarVisible((prev) => !prev);
+  };
+
+  // Listen for messages from the background script or popup
+  React.useEffect(() => {
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message.type === "toggle_sidebar") {
         toggleSidebar();
-    }
-})
+      }
+    });
+  }, []);
 
+  return (
+    <Sidebar
+      onClose={toggleSidebar}
+      isSidebarVisible={isSidebarVisible}
+    />
+  );
+};
+
+// Mount the sidebar toggle button (and sidebar container)
+const mountSideBar = () => {
+  const container = document.createElement("div");
+  container.id = sidebarId;
+  document.body.appendChild(container);
+  ReactDOM.render(<App />, container);
+};
+
+mountSideBar();

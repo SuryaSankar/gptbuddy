@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { extractQuestionsForChatGPT, extractQuestionsForClaudeAI, extractQuestionsForPerplexityAI, extractQuestionsForGemini } from "./utils/dom_utils";
 
-const Sidebar = () => {
+const Sidebar = ({onClose, isSidebarVisible}) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -52,75 +52,103 @@ const Sidebar = () => {
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "0",
-        right: "0",
-        width: "300px",
-        height: "100%",
-        backgroundColor: "#f4f4f4",
-        borderLeft: "1px solid #ddd",
-        boxShadow: "-2px 0 5px rgba(0, 0, 0, 0.2)",
-        zIndex: 9999,
-        overflowY: "auto",
-      }}
-    >
-      <h2 style={{ padding: "10px", margin: "0", backgroundColor: "#000000", color: "#fff" }}>
-        {questions.length} {questions.length == 1 ? 'Question' : 'Questions'}
-      </h2>
-      <ul style={{ listStyle: "none", padding: "10px", margin: "0" }}>
-        {questions.map((question, index) => (
-          <li
-            key={index}
-            style={{
-              padding: "10px",
-              borderBottom: "3px solid #ddd",
-              cursor: "pointer",
-              position: "relative"
-            }}
-            onClick={() => scrollToQuestion(question)}
-            title={question.textContent}
-          >
-            <div
+    <>
+      {/* Toggle Button */}
+      <div
+        onClick={onClose}
+        style={{
+          position: "fixed",
+          top: "50%",
+          right: isSidebarVisible ? "300px" : "0",
+          transform: "translateY(-50%)",
+          width: "30px",
+          height: "120px",
+          backgroundColor: "#438c87",
+          color: "#fff",
+          fontSize: "14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          writingMode: "vertical-rl",
+          textAlign: "center",
+          cursor: "pointer",
+          zIndex: 10000,
+          borderRadius: "5px 0 0 5px",
+        }}
+      >
+        {isSidebarVisible ? "Hide GPTBuddy" : "Show GPTBuddy"}
+      </div>
+
+      {isSidebarVisible && <div
+        style={{
+          position: "fixed",
+          top: "0",
+          right: "0",
+          width: "300px",
+          height: "100%",
+          backgroundColor: "#ECECEC",
+          borderLeft: "1px solid #ddd",
+          boxShadow: "-2px 0 5px rgba(0, 0, 0, 0.2)",
+          zIndex: 9999,
+          overflowY: "auto",
+        }}
+      >
+        <h2 style={{ padding: "10px", margin: "0", backgroundColor: "#438c87", color: "#fff" }}>
+          {questions.length} {questions.length == 1 ? 'Question' : 'Questions'}
+        </h2>
+        <ul style={{ listStyle: "none", padding: "10px", margin: "0" }}>
+          {questions.map((question, index) => (
+            <li
+              key={index}
               style={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {index + 1 }. {trimToWords(question.textContent, 20)}
-            </div>
-            <div
-              style={{
-                position: "absolute",
-                top: "0",
-                left: "105%",
-                width: "300px",
-                backgroundColor: "#fff",
-                border: "1px solid #ddd",
-                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
                 padding: "10px",
-                whiteSpace: "normal",
-                display: "none", // Hidden by default
-                zIndex: 10000,
+                borderBottom: "3px solid #ddd",
+                cursor: "pointer",
+                position: "relative"
               }}
-              className="tooltip"
+              onClick={() => scrollToQuestion(question)}
+              title={question.textContent}
             >
-              {question.textContent}
-            </div>
-          </li>
-        ))}
-      </ul>
-      <style>
-        {`
-          /* Show tooltip on hover */
-          li:hover .tooltip {
-            display: block;
-          }
-        `}
-      </style>
-    </div>
+              <div
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {index + 1 }. {trimToWords(question.textContent, 20)}
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "0",
+                  left: "105%",
+                  width: "300px",
+                  backgroundColor: "#fff",
+                  border: "1px solid #ddd",
+                  boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+                  padding: "10px",
+                  whiteSpace: "normal",
+                  display: "none", // Hidden by default
+                  zIndex: 10000,
+                }}
+                className="tooltip"
+              >
+                {question.textContent}
+              </div>
+            </li>
+          ))}
+        </ul>
+        <style>
+          {`
+            /* Show tooltip on hover */
+            li:hover .tooltip {
+              display: block;
+            }
+          `}
+        </style>
+      </div>}
+    </>
   );
 };
 
