@@ -36,6 +36,14 @@ const Sidebar = () => {
     element.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
+  const trimToWords = (text, wordLimit) => {
+    const words = text.split(" ");
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(" ") + "...";
+    }
+    return text;
+  };
+
   return (
     <div
       style={{
@@ -62,10 +70,29 @@ const Sidebar = () => {
               padding: "10px",
               borderBottom: "3px solid #ddd",
               cursor: "pointer",
+              position: "relative"
             }}
             onClick={() => scrollToQuestion(question)}
+            title={question.textContent}
           >
-            {index + 1 }. {question.textContent}
+            <div
+              style={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                transition: "all 0.1s ease",
+              }}
+              onMouseEnter={(e) => {
+                const tooltip = document.createElement("div");
+                tooltip.textContent = question.textContent;
+                tooltip.style.position = "absolute";
+                tooltip.style.top = `${e.target.offsetTop}px`;
+                tooltip.style.left = "-300px";
+                tooltip.style.whiteSpace = "pre-wrap";
+              }}
+            >
+              {index + 1 }. {trimToWords(question.textContent, 20)}
+            </div>
           </li>
         ))}
       </ul>
