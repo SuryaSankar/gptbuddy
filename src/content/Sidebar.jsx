@@ -96,6 +96,11 @@ const Sidebar = ({onClose, isSidebarVisible}) => {
         <h2 style={{ padding: "10px", margin: "0", backgroundColor: "#438c87", color: "#fff" }}>
           {questions.length} {questions.length == 1 ? 'Question' : 'Questions'}
         </h2>
+        {
+          questions.length == 0 && <div style={{padding: "10px",}}>
+            Open a conversation thread or start a new conversation to view the questions in that conversation
+            </div>
+        }
         <ul style={{ listStyle: "none", padding: "10px", margin: "0" }}>
           {questions.map((question, index) => (
             <li
