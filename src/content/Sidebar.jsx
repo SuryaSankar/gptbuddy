@@ -1,48 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { extractQuestionsForChatGPT, extractQuestionsForClaudeAI, extractQuestionsForPerplexityAI } from "./utils/dom_utils";
 
 const Sidebar = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    const extractQuestionsForChatGPT = () => {
-      const articles = document.querySelectorAll("article");
-      const userQuestions = [];
-      articles.forEach(article=>{
-        const articleType = article.children[0].textContent;
-        if(articleType=='You said:'){
-          const userQuestion = article.getElementsByClassName("whitespace-pre-wrap")[0];
-          userQuestions.push(userQuestion);
-        }
-      });
-      return userQuestions;
-    }
-
-    const extractQuestionsForClaudeAI = () => {
-      const elements = document.getElementsByClassName("font-user-message");
-      return Array.from(elements).map(elem=>elem.children[0]).filter(elem=>elem.nodeName=='P');
-    }
-
-    const extractQuestionsForPerplexityAI = () => {
-      const elements = document.getElementsByClassName("group/query");
-      return Array.from(elements);
-    }
-
     const extractQuestions = () => {
       switch(location.hostname){
-        case 'chatgpt.com':
-          setQuestions(extractQuestionsForChatGPT());
-          break;
-        case 'claude.ai':
-          setQuestions(extractQuestionsForClaudeAI());
-          break;
-        case 'www.perplexity.ai':
-        case 'perplexity.ai':
-          setQuestions(extractQuestionsForPerplexityAI());
-          break;
-        default:
-          console.log("Unsupported host");
+          case 'chatgpt.com':
+              setQuestions(extractQuestionsForChatGPT());
+              break;
+          case 'claude.ai':
+              setQuestions(extractQuestionsForClaudeAI());
+              break;
+          case 'www.perplexity.ai':
+          case 'perplexity.ai':
+              setQuestions(extractQuestionsForPerplexityAI());
+              break;
+          default:
+              console.log("Unsupported host");
       }
-    };
+    }
 
     // Extract questions initially
     extractQuestions();
@@ -86,7 +64,7 @@ const Sidebar = () => {
       }}
     >
       <h2 style={{ padding: "10px", margin: "0", backgroundColor: "#000000", color: "#fff" }}>
-        {questions.length} Questions
+        {questions.length} {questions.length == 1 ? 'Questions' : 'Question'}
       </h2>
       <ul style={{ listStyle: "none", padding: "10px", margin: "0" }}>
         {questions.map((question, index) => (
