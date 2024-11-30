@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "GPTBuddy",
+  "version": "1.0",
+  "description": "Adds a collapsible sidebar to ChatGPT and Claude conversations.",
+  "icons": {
+    "128": "icon.png"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://chat.openai.com/*", "https://chatgpt.com/*", "https://claude.ai/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*", "https://chatgpt.com/*", "https://claude.ai/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle_sidebar": {
+      "suggested_key" : {
+        "default": "Ctrl + Shift + S"
+      },
+      "description": "Toggle the sidebar"
+    }
+  },
+  "action": {
+    "default_icon": "icon.png",
+    "default_title": "Toggle Sidebar"
+  }
+}
