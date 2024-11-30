@@ -5,7 +5,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     // Function to extract questions from the ChatGPT DOM
-    const extractQuestions = () => {
+    const extractQuestionsForChatGPT = () => {
       const articles = document.querySelectorAll("article");
       const userQuestions = [];
       articles.forEach(article=>{
@@ -15,7 +15,25 @@ const Sidebar = () => {
           userQuestions.push(userQuestion);
         }
       });
-      setQuestions(userQuestions);
+      return userQuestions;
+    }
+
+    const extractQuestionsForClaudeAI = () => {
+      const elements = document.getElementsByClassName("font-user-message");
+      return Array.from(elements).map(elem=>elem.children[0]).filter(elem=>elem.nodeName=='P');
+    }
+
+    const extractQuestions = () => {
+      switch(location.hostname){
+        case 'chatgpt.com':
+          setQuestions(extractQuestionsForChatGPT());
+          break;
+        case 'claude.ai':
+          setQuestions(extractQuestionsForClaudeAI());
+          break;
+        default:
+          console.log("Unsupported host");
+      }
     };
 
     // Extract questions initially
