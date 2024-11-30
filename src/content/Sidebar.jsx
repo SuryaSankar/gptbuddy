@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { extractQuestionsForChatGPT, extractQuestionsForClaudeAI, extractQuestionsForPerplexityAI } from "./utils/dom_utils";
+import { extractQuestionsForChatGPT, extractQuestionsForClaudeAI, extractQuestionsForPerplexityAI, extractQuestionsForGemini } from "./utils/dom_utils";
 
 const Sidebar = () => {
   const [questions, setQuestions] = useState([]);
@@ -17,6 +17,9 @@ const Sidebar = () => {
           case 'perplexity.ai':
               setQuestions(extractQuestionsForPerplexityAI());
               break;
+          case 'gemini.google.com':
+            setQuestions(extractQuestionsForGemini());
+            break;
           default:
               console.log("Unsupported host");
       }
@@ -64,7 +67,7 @@ const Sidebar = () => {
       }}
     >
       <h2 style={{ padding: "10px", margin: "0", backgroundColor: "#000000", color: "#fff" }}>
-        {questions.length} {questions.length == 1 ? 'Questions' : 'Question'}
+        {questions.length} {questions.length == 1 ? 'Question' : 'Questions'}
       </h2>
       <ul style={{ listStyle: "none", padding: "10px", margin: "0" }}>
         {questions.map((question, index) => (

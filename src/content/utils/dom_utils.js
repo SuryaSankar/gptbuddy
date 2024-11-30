@@ -20,3 +20,8 @@ export const extractQuestionsForPerplexityAI = () => {
     const elements = document.getElementsByClassName("group/query");
     return Array.from(elements);
 }
+
+export const extractQuestionsForGemini = () => {
+    const elements = document.getElementsByClassName("query-text");
+    return Array.from(elements).map(elem=>elem.children[0]);
+}
