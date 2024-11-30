@@ -4,7 +4,6 @@ const Sidebar = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    // Function to extract questions from the ChatGPT DOM
     const extractQuestionsForChatGPT = () => {
       const articles = document.querySelectorAll("article");
       const userQuestions = [];
@@ -23,6 +22,11 @@ const Sidebar = () => {
       return Array.from(elements).map(elem=>elem.children[0]).filter(elem=>elem.nodeName=='P');
     }
 
+    const extractQuestionsForPerplexityAI = () => {
+      const elements = document.getElementsByClassName("group/query");
+      return Array.from(elements);
+    }
+
     const extractQuestions = () => {
       switch(location.hostname){
         case 'chatgpt.com':
@@ -30,6 +34,10 @@ const Sidebar = () => {
           break;
         case 'claude.ai':
           setQuestions(extractQuestionsForClaudeAI());
+          break;
+        case 'www.perplexity.ai':
+        case 'perplexity.ai':
+          setQuestions(extractQuestionsForPerplexityAI());
           break;
         default:
           console.log("Unsupported host");

@@ -4,13 +4,30 @@
   "version": "1.0",
   "description": "Adds a collapsible sidebar to ChatGPT and Claude conversations.",
   "icons": {
-    "128": "icon.png"
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
   "permissions": ["activeTab", "scripting", "commands"],
-  "host_permissions": ["https://chat.openai.com/*", "https://chatgpt.com/*", "https://claude.ai/*"],
+  "host_permissions": [
+    "https://www.chatgpt.com/*",
+    "https://chatgpt.com/*",
+    "https://www.claude.ai/*",
+    "https://claude.ai/*",
+    "https://www.perplexity.ai/",
+    "https://perplexity.ai/"
+  ],
   "content_scripts": [
     {
-      "matches": ["https://chat.openai.com/*", "https://chatgpt.com/*", "https://claude.ai/*"],
+      "matches": [
+        "https://www.chatgpt.com/*",
+        "https://chatgpt.com/*",
+        "https://www.claude.ai/*",
+        "https://claude.ai/*",
+        "https://www.perplexity.ai/",
+        "https://perplexity.ai/"
+      ],
       "js": ["content.js"]
     }
   ],
@@ -26,7 +43,7 @@
     }
   },
   "action": {
-    "default_icon": "icon.png",
+    "default_icon": "icons/icon128.png",
     "default_title": "Toggle Sidebar"
   }
 }
