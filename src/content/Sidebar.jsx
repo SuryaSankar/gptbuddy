@@ -52,7 +52,7 @@ const Sidebar = () => {
       }}
     >
       <h2 style={{ padding: "10px", margin: "0", backgroundColor: "#000000", color: "#fff" }}>
-        Questions
+        {questions.length} Questions
       </h2>
       <ul style={{ listStyle: "none", padding: "10px", margin: "0" }}>
         {questions.map((question, index) => (
@@ -65,7 +65,7 @@ const Sidebar = () => {
             }}
             onClick={() => scrollToQuestion(question)}
           >
-            {question.textContent}
+            {index + 1 }. {question.textContent}
           </li>
         ))}
       </ul>
