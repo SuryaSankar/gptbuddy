@@ -17,6 +17,7 @@ const toggleSidebar = () => {
 }
 
 chrome.runtime.onMessage.addListener(message=>{
+    console.log(`Received message ${message.type}`)
     if(message.type=='toggle_sidebar'){
         toggleSidebar();
     }

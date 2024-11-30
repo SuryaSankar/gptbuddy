@@ -6,7 +6,7 @@
   "icons": {
     "128": "icon.png"
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "commands"],
   "host_permissions": ["https://chat.openai.com/*", "https://chatgpt.com/*", "https://claude.ai/*"],
   "content_scripts": [
     {
@@ -20,7 +20,7 @@
   "commands": {
     "toggle_sidebar": {
       "suggested_key" : {
-        "default": "Ctrl + Shift + S"
+        "default": "Ctrl + Shift + 0"
       },
       "description": "Toggle the sidebar"
     }
