@@ -123,35 +123,9 @@ const Sidebar = ({onClose, isSidebarVisible}) => {
               >
                 {index + 1 }. {trimToWords(question.textContent, 20)}
               </div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: "0",
-                  left: "105%",
-                  width: "300px",
-                  backgroundColor: "#fff",
-                  border: "1px solid #ddd",
-                  boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-                  padding: "10px",
-                  whiteSpace: "normal",
-                  display: "none", // Hidden by default
-                  zIndex: 10000,
-                }}
-                className="tooltip"
-              >
-                {question.textContent}
-              </div>
             </li>
           ))}
         </ul>
-        <style>
-          {`
-            /* Show tooltip on hover */
-            li:hover .tooltip {
-              display: block;
-            }
-          `}
-        </style>
       </div>}
     </>
   );
