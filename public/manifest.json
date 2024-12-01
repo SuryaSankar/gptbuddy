@@ -47,11 +47,5 @@
   "action": {
     "default_icon": "icons/icon128.png",
     "default_title": "Toggle Sidebar"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["*.map"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  }
 }
