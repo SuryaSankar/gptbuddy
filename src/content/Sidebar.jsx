@@ -86,6 +86,7 @@ const Sidebar = ({onClose, isSidebarVisible}) => {
           right: "0",
           width: "300px",
           height: "100%",
+          color: "#000",
           backgroundColor: "#ECECEC",
           borderLeft: "1px solid #ddd",
           boxShadow: "-2px 0 5px rgba(0, 0, 0, 0.2)",
